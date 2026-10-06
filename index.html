@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="DTRC learns directed temporal representations on frozen world-model features, connecting goal-reaching cost with action-level progress for offline visual control.">
+  <meta name="robots" content="noindex,nofollow">
+  <link rel="canonical" href="https://chenyang-yuan.github.io/dtrc-project/">
+  <title>DTRC · Directed Temporal Representations for Offline Visual Control</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='9' fill='%232b548b'/%3E%3Cpath d='M10 12h11a8 8 0 010 16H10V12m12 0 5-4m-5 4 5 4' fill='none' stroke='white' stroke-width='3' stroke-linejoin='round'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css?v=authors-20261006">
+  <script src="app.js?v=editorial-20261005" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <main id="main">
+    <section class="hero container" id="top">
+      <h1>Directed Temporal Representations<br class="desktop-break"> for Offline Visual Control</h1>
+      <div class="authors" aria-label="Authors">
+        <span><a href="https://scholar.google.com/citations?user=NBqTmHoAAAAJ&amp;hl=en" target="_blank" rel="noopener noreferrer">Chenyang Yuan</a><sup>1</sup></span>
+        <span><a href="https://arc0127.github.io/" target="_blank" rel="noopener noreferrer">Haoyu Wang</a><sup>2</sup></span>
+        <span><a href="https://jz-fun.github.io/" target="_blank" rel="noopener noreferrer">Zhuo Sun</a><sup>3</sup></span>
+        <span><a href="https://scholar.google.com/citations?hl=en&amp;user=JsLhV54AAAAJ&amp;view_op=list_works&amp;sortby=pubdate" target="_blank" rel="noopener noreferrer">Xiaoyuan Cheng</a><sup>4</sup></span>
+      </div>
+      <div class="affiliations" aria-label="Affiliations">
+        <div><span><sup>1</sup>University of Sheffield</span><span><sup>2</sup>Shanghai Jiaotong University</span></div>
+        <div><span><sup>3</sup>Shanghai University of Finance and Economics</span><span><sup>4</sup>University College London</span></div>
+      </div>
+      <div class="resource-links"><a class="button primary" href="paper.html" target="_blank" rel="noopener">Paper</a><a class="button" href="https://github.com/Chenyang-Yuan/DTRC" target="_blank" rel="noopener noreferrer" aria-label="Code on GitHub">Code</a><a class="button" href="#evolution">Training evolution</a></div>
+    </section>
+    <section class="abstract section narrow" id="abstract"><h2>Abstract</h2><p>World models provide predictive visual features. <strong>Directed Temporal Representations for Control (DTRC)</strong> organizes these features around the cost of reaching a goal. From offline trajectories, DTRC learns a temporal distance in environment steps, allowing forward and reverse costs to differ. The temporal critic guides action learning through recorded behavior and model-predicted improvements. We study the resulting geometry and control performance across ten visual tasks.</p></section>
+    <section class="section container" id="method">
+      <div class="section-heading"><h2>Learning a geometry of goal reaching</h2></div>
+      <figure class="research-figure">
+        <button class="figure-open" data-zoom="assets/overview.webp" data-caption="DTRC: offline visual trajectories, directed temporal representation, and critic-guided policy learning." aria-label="Enlarge the method overview"><img src="assets/overview.webp" width="2600" height="964" alt="Offline images provide temporal supervision for a directed representation. The temporal critic evaluates progress and guides policy training." fetchpriority="high"></button>
+        <figcaption>Temporal supervision organizes frozen visual features around goal-reaching cost and guides action learning.</figcaption>
+      </figure>
+    </section>
+    <section class="section container" id="representation">
+      <div class="section-heading"><h2>From predictive features to temporal structure</h2></div>
+      <div class="task-chooser" role="group" aria-label="Select a task"><button data-task="pusht" aria-pressed="true">PushT</button><button data-task="tworoom" aria-pressed="false">TwoRoom</button><button data-task="reacher" aria-pressed="false">Reacher</button><button data-task="cube" aria-pressed="false">Cube</button><button data-task="pointmaze" aria-pressed="false">PointMaze</button><button data-task="cube-double" aria-pressed="false">Cube-Double</button><button data-task="scene" aria-pressed="false">Scene</button><button data-task="antmaze-medium" aria-pressed="false">AntMaze</button><button data-task="humanoidmaze-medium" aria-pressed="false">HumanoidMaze</button><button data-task="puzzle-3x3" aria-pressed="false">Puzzle-3x3</button></div>
+      <figure class="research-figure">
+        <h3 class="figure-title"><span data-task-label>PushT</span> · Representation spaces</h3>
+        <button class="figure-open" id="spaces-open" data-zoom="assets/pusht-spaces-20261004.webp" aria-label="Enlarge representation spaces"><img id="spaces-image" src="assets/pusht-spaces-20261004.webp" width="2400" height="700" alt="PushT: frozen visual features, control representations, symmetric coordinates, and directed potentials." loading="lazy"></button>
+        <figcaption>The same observations in four learned spaces, projected independently with PCA. Color: normalized episode time.</figcaption>
+      </figure>
+      <figure class="research-figure diagnostics">
+        <h3 class="figure-title"><span data-task-label>PushT</span> · Temporal-distance diagnostics</h3>
+        <button class="figure-open" id="diagnostics-open" data-zoom="assets/pusht-diagnostics-20261004.webp" aria-label="Enlarge temporal-distance diagnostics"><img id="diagnostics-image" src="assets/pusht-diagnostics-20261004.webp" width="2400" height="900" alt="PushT: temporal calibration, symmetric and directed costs, and one-step progress on held-out state–goal pairs." loading="lazy"></button>
+        <figcaption>Gray curves show the symmetric component of DTRC; colored curves show its directed temporal distance.</figcaption>
+      </figure>
+      <div class="evolution-section" id="evolution">
+        <div class="subsection-heading"><div><h3>Representation evolution</h3><p>The same observations throughout training, in a fixed PCA projection.</p></div><button class="text-button" id="evolution-toggle" aria-pressed="false">Show final checkpoint</button></div>
+        <div class="evolution-grid">
+        <figure class="evolution-card"><h4>PushT</h4><button class="figure-open" data-zoom="assets/pusht-evolution-20261004.gif" data-evolution="pusht" aria-label="Enlarge PushT training evolution"><picture><source media="(prefers-reduced-motion: reduce)" srcset="assets/pusht-evolution-poster-20261004.webp"><img src="assets/pusht-evolution-20261004.gif" width="500" height="500" alt="PushT: EMA control representation across 29 saved training checkpoints, in fixed PCA coordinates."></picture></button></figure>
+        <figure class="evolution-card"><h4>TwoRoom</h4><button class="figure-open" data-zoom="assets/tworoom-evolution-20261004.gif" data-evolution="tworoom" aria-label="Enlarge TwoRoom training evolution"><picture><source media="(prefers-reduced-motion: reduce)" srcset="assets/tworoom-evolution-poster-20261004.webp"><img src="assets/tworoom-evolution-20261004.gif" width="500" height="500" alt="TwoRoom: EMA control representation across 29 saved training checkpoints, in fixed PCA coordinates."></picture></button></figure>
+        <figure class="evolution-card"><h4>Reacher</h4><button class="figure-open" data-zoom="assets/reacher-evolution-20261004.gif" data-evolution="reacher" aria-label="Enlarge Reacher training evolution"><picture><source media="(prefers-reduced-motion: reduce)" srcset="assets/reacher-evolution-poster-20261004.webp"><img src="assets/reacher-evolution-20261004.gif" width="500" height="500" alt="Reacher: EMA control representation across 29 saved training checkpoints, in fixed PCA coordinates."></picture></button></figure>
+        <figure class="evolution-card"><h4>Cube</h4><button class="figure-open" data-zoom="assets/cube-evolution-20261004.gif" data-evolution="cube" aria-label="Enlarge Cube training evolution"><picture><source media="(prefers-reduced-motion: reduce)" srcset="assets/cube-evolution-poster-20261004.webp"><img src="assets/cube-evolution-20261004.gif" width="500" height="500" alt="Cube: EMA control representation across 29 saved training checkpoints, in fixed PCA coordinates."></picture></button></figure>
+        <figure class="evolution-card"><h4>PointMaze</h4><button class="figure-open" data-zoom="assets/pointmaze-evolution-20261004.gif" data-evolution="pointmaze" aria-label="Enlarge PointMaze training evolution"><picture><source media="(prefers-reduced-motion: reduce)" srcset="assets/pointmaze-evolution-poster-20261004.webp"><img src="assets/pointmaze-evolution-20261004.gif" width="500" height="500" alt="PointMaze: EMA control representation across 29 saved training checkpoints, in fixed PCA coordinates."></picture></button></figure>
+        <figure class="evolution-card"><h4>Cube-Double</h4><button class="figure-open" data-zoom="assets/cube-double-evolution-20261004.gif" data-evolution="cube-double" aria-label="Enlarge Cube-Double training evolution"><picture><source media="(prefers-reduced-motion: reduce)" srcset="assets/cube-double-evolution-poster-20261004.webp"><img src="assets/cube-double-evolution-20261004.gif" width="500" height="500" alt="Cube-Double: EMA control representation across 29 saved training checkpoints, in fixed PCA coordinates."></picture></button></figure>
+        <figure class="evolution-card"><h4>Scene</h4><button class="figure-open" data-zoom="assets/scene-evolution-20261004.gif" data-evolution="scene" aria-label="Enlarge Scene training evolution"><picture><source media="(prefers-reduced-motion: reduce)" srcset="assets/scene-evolution-poster-20261004.webp"><img src="assets/scene-evolution-20261004.gif" width="500" height="500" alt="Scene: EMA control representation across 29 saved training checkpoints, in fixed PCA coordinates."></picture></button></figure>
+        <figure class="evolution-card"><h4>AntMaze</h4><button class="figure-open" data-zoom="assets/antmaze-medium-evolution-20261004.gif" data-evolution="antmaze-medium" aria-label="Enlarge AntMaze training evolution"><picture><source media="(prefers-reduced-motion: reduce)" srcset="assets/antmaze-medium-evolution-poster-20261004.webp"><img src="assets/antmaze-medium-evolution-20261004.gif" width="500" height="500" alt="AntMaze: EMA control representation across 29 saved training checkpoints, in fixed PCA coordinates."></picture></button></figure>
+        <figure class="evolution-card"><h4>HumanoidMaze</h4><button class="figure-open" data-zoom="assets/humanoidmaze-medium-evolution-20261004.gif" data-evolution="humanoidmaze-medium" aria-label="Enlarge HumanoidMaze training evolution"><picture><source media="(prefers-reduced-motion: reduce)" srcset="assets/humanoidmaze-medium-evolution-poster-20261004.webp"><img src="assets/humanoidmaze-medium-evolution-20261004.gif" width="500" height="500" alt="HumanoidMaze: EMA control representation across 29 saved training checkpoints, in fixed PCA coordinates."></picture></button></figure>
+        <figure class="evolution-card"><h4>Puzzle-3x3</h4><button class="figure-open" data-zoom="assets/puzzle-3x3-evolution-20261004.gif" data-evolution="puzzle-3x3" aria-label="Enlarge Puzzle-3x3 training evolution"><picture><source media="(prefers-reduced-motion: reduce)" srcset="assets/puzzle-3x3-evolution-poster-20261004.webp"><img src="assets/puzzle-3x3-evolution-20261004.gif" width="500" height="500" alt="Puzzle-3x3: EMA control representation across 29 saved training checkpoints, in fixed PCA coordinates."></picture></button></figure>
+        </div>
+        <div class="evolution-caption"><div class="phase-legend"><span>Episode time</span><span>0</span><i aria-hidden="true"></i><span>1</span></div></div>
+      </div>
+    </section>
+    <section class="section container" id="results">
+      <div class="section-heading"><h2>Temporal geometry that informs behavior</h2><p>Goal-conditioned control across ten visual tasks.</p></div>
+      <div class="tabs" role="tablist" aria-label="Control results">
+        <button class="tab-button" role="tab" id="tab-four" aria-selected="true" aria-controls="panel-four" data-panel="panel-four">Four LeWM tasks</button>
+        <button class="tab-button" role="tab" id="tab-six" aria-selected="false" aria-controls="panel-six" data-panel="panel-six" tabindex="-1">Six OGBench tasks</button>
+        <button class="tab-button" role="tab" id="tab-components" aria-selected="false" aria-controls="panel-components" data-panel="panel-components" tabindex="-1">Temporal supervision</button>
+      </div>
+      <div class="tabpanel" id="panel-four" role="tabpanel" aria-labelledby="tab-four">
+        <figure class="research-figure"><button class="figure-open" data-zoom="assets/performance-paper-20261004.webp" data-caption="Goal-conditioned success on PushT, TwoRoom, Reacher, and OGBench-Cube." aria-label="Enlarge the four-task performance chart"><img src="assets/performance-paper-20261004.webp" width="2600" height="614" alt="Success-rate comparison of DTRC, GC-IDM, GCBC, GC-IQL, HILP, and LeWM on four visual tasks." loading="lazy"></button><figcaption>Success rate: mean ± standard deviation over five evaluation seeds.</figcaption></figure>
+        <p class="result-caption">DTRC improves over LeWM by <strong>14.7, 24.0, and 30.0 percentage points</strong> on TwoRoom, Reacher, and Cube.</p>
+      </div>
+      <div class="tabpanel" id="panel-six" role="tabpanel" aria-labelledby="tab-six" hidden>
+        <div class="table-scroll"><table class="data-table" id="six-task-table"><caption>Success rate (%) · mean ± standard deviation over five evaluation seeds</caption><thead><tr><th scope="col">Method</th><th scope="col">PointMaze</th><th scope="col">Cube-Double</th><th scope="col">Scene</th><th scope="col">AntMaze-M</th><th scope="col">HumanoidMaze-M</th><th scope="col">Puzzle-3x3</th></tr></thead><tbody></tbody></table></div>
+        <p class="result-caption">DTRC ranks among the top two methods on <strong>five of six tasks</strong>. Bold: best mean; underline: second-best mean.</p>
+      </div>
+      <div class="tabpanel" id="panel-components" role="tabpanel" aria-labelledby="tab-components" hidden>
+        <div class="table-scroll"><table class="data-table" id="component-table"><caption>Success rate (%) · mean ± standard deviation over five evaluation seeds</caption><thead><tr><th scope="col">Configuration</th><th scope="col">PushT</th><th scope="col">TwoRoom</th><th scope="col">Reacher</th><th scope="col">Cube</th></tr></thead><tbody></tbody></table></div>
+        <p class="result-caption">Temporal representation learning and advantage weighting improve the same policy by <strong>5.3–32.0 percentage points</strong>, without model-assisted targets.</p>
+      </div>
+    </section>
+    <section class="section container" id="rollouts">
+      <div class="section-heading"><h2>From a visual goal to coordinated action</h2><p>Selected successful rollouts in the environment (left) and control representation (right).</p></div>
+      <div class="rollout-grid">
+        <figure class="rollout-card">
+          <figcaption><h3>PushT</h3></figcaption>
+          <picture><source media="(prefers-reduced-motion: reduce)" srcset="assets/pusht-environment-latent-poster.webp?v=gray-aligned-20261002"><img src="assets/pusht-environment-latent.gif?v=gray-aligned-20261002" width="1040" height="512" alt="PushT: synchronized environment and latent trajectory." loading="lazy"></picture>
+        </figure>
+        <figure class="rollout-card">
+          <figcaption><h3>Reacher</h3></figcaption>
+          <picture><source media="(prefers-reduced-motion: reduce)" srcset="assets/reacher-environment-latent-poster.webp?v=gray-aligned-20261002"><img src="assets/reacher-environment-latent.gif?v=gray-aligned-20261002" width="1040" height="512" alt="Reacher: synchronized environment and latent trajectory." loading="lazy"></picture>
+        </figure>
+        <figure class="rollout-card">
+          <figcaption><h3>TwoRoom</h3></figcaption>
+          <picture><source media="(prefers-reduced-motion: reduce)" srcset="assets/tworoom-environment-latent-poster.webp?v=gray-aligned-20261002"><img src="assets/tworoom-environment-latent.gif?v=gray-aligned-20261002" width="1040" height="512" alt="TwoRoom: synchronized environment and latent trajectory." loading="lazy"></picture>
+        </figure>
+        <figure class="rollout-card">
+          <figcaption><h3>Cube</h3></figcaption>
+          <picture><source media="(prefers-reduced-motion: reduce)" srcset="assets/cube-environment-latent-poster.webp?v=gray-aligned-20261002"><img src="assets/cube-environment-latent.gif?v=gray-aligned-20261002" width="1040" height="512" alt="Cube: synchronized environment and latent trajectory." loading="lazy"></picture>
+        </figure>
+        <figure class="rollout-card">
+          <figcaption><h3>PointMaze</h3></figcaption>
+          <picture><source media="(prefers-reduced-motion: reduce)" srcset="assets/pointmaze-environment-latent-poster.webp?v=gray-aligned-20261002"><img src="assets/pointmaze-environment-latent.gif?v=gray-aligned-20261002" width="1040" height="512" alt="PointMaze: synchronized environment and latent trajectory." loading="lazy"></picture>
+        </figure>
+        <figure class="rollout-card">
+          <figcaption><h3>Puzzle-3x3</h3></figcaption>
+          <picture><source media="(prefers-reduced-motion: reduce)" srcset="assets/puzzle-3x3-environment-latent-poster.webp?v=gray-aligned-20261002"><img src="assets/puzzle-3x3-environment-latent.gif?v=gray-aligned-20261002" width="1040" height="512" alt="Puzzle-3x3: synchronized environment and latent trajectory." loading="lazy"></picture>
+        </figure>
+      </div>
+      <p class="behavior-note">Gray: reference states. Color: executed trajectory. Star: goal.</p>
+    </section>
+  </main>
+  <footer class="container"><span>DTRC · Directed Temporal Representations for Control</span><a href="#top">Back to top ↑</a></footer>
+  <dialog id="figure-dialog" aria-labelledby="figure-caption"><button class="dialog-close" aria-label="Close enlarged figure">×</button><div class="zoom-scroll"><img id="figure-large" alt=""></div><p id="figure-caption"></p><a id="figure-original" target="_blank" rel="noopener">Open full-resolution image</a></dialog>
+</body>
+</html>
