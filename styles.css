@@ -94,6 +94,7 @@ html{scroll-padding-top:24px}
 .affiliations>div{display:flex;justify-content:center;flex-wrap:wrap;gap:4px 26px}
 .affiliations>div+div{margin-top:3px}
 .affiliations sup{margin-right:4px}
+.author-note{margin:12px 0 0;font-size:14px;line-height:1.5;color:var(--muted)}
 .hero .resource-links{margin-top:27px;margin-bottom:0}
 @media(max-width:760px){.hero{padding-top:44px}.authors{font-size:19px;gap:8px 22px;margin-top:24px}.affiliations{font-size:15px}.affiliations>div{gap:4px 20px}}
 @media(max-width:450px){.hero{padding-top:36px}.authors{font-size:18px;gap:8px 20px}.affiliations{font-size:14px}.affiliations>div{flex-direction:column;gap:3px}.hero .resource-links{gap:9px}}
